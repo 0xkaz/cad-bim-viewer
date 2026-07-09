@@ -1,0 +1,8 @@
+# Local Worker secrets (copy to .dev.vars and fill in real values)
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+WORKER_JWT_SECRET=change_this_to_a_random_secret_min_32_chars
+
+# Optional conversion service URLs for local development
+# CONVERTER_URL=http://localhost:8080
+# JWW_CONVERTER_URL=

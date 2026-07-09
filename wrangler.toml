@@ -1,0 +1,32 @@
+name = "cad-bim-viewer-api"
+main = "worker/src/index.ts"
+compatibility_date = "2025-04-06"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+routes = [
+  { pattern = "cad-bim-viewer.0xkaz.com/api/*", zone_name = "0xkaz.com" }
+]
+
+[vars]
+FRONTEND_URL = "https://cad-bim-viewer.0xkaz.com"
+CONVERTER_URL = ""
+JWW_CONVERTER_URL = ""
+
+# ADMIN_EMAIL is provided via `wrangler secret put ADMIN_EMAIL` (kept out of source).
+
+# Override these via `wrangler secret put` in production
+# GOOGLE_CLIENT_ID = ""
+# WORKER_JWT_SECRET = ""
+
+[[d1_databases]]
+binding = "DB"
+database_name = "cad-bim-viewer-db"
+database_id = "10049894-9cc6-44bc-ac3c-95d0f8496e30"
+
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "cad-bim-viewer-uploads"
+
+[build]
+command = ""

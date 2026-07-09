@@ -1,0 +1,61 @@
+{
+  "name": "cad-bim-viewer",
+  "version": "0.1.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"pnpm dev:web\" \"pnpm dev:worker\"",
+    "dev:web": "vite",
+    "dev:worker": "wrangler dev worker/src/index.ts --local --persist",
+    "build": "pnpm build:web && pnpm build:worker",
+    "build:web": "tsc && vite build",
+    "build:worker": "wrangler deploy worker/src/index.ts --dry-run --outdir dist/worker",
+    "test": "vitest run --config worker/vitest.config.ts",
+    "test:watch": "vitest --config worker/vitest.config.ts",
+    "lint": "biome check .",
+    "lint:fix": "biome check . --write",
+    "format": "biome format . --write",
+    "typecheck": "tsc --noEmit && tsc -p worker/tsconfig.json --noEmit",
+    "db:migrate:local": "wrangler d1 migrations apply cad-bim-viewer-db --local",
+    "db:migrate:prod": "wrangler d1 migrations apply cad-bim-viewer-db",
+    "deploy:worker": "wrangler deploy worker/src/index.ts",
+    "deploy:pages": "wrangler pages deploy dist"
+  },
+  "dependencies": {
+    "@hono/zod-validator": "^0.4.3",
+    "@tanstack/react-table": "^8.21.3",
+    "@thatopen/components": "2.4.11",
+    "@thatopen/fragments": "3.0.11",
+    "dxf-viewer": "^1.0.48",
+    "hono": "^4.7.5",
+    "jose": "^6.0.10",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.5.0",
+    "three": "0.175.0",
+    "web-ifc": "0.0.68",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@cloudflare/vitest-pool-workers": "^0.8.15",
+    "@cloudflare/workers-types": "^4.20250406.0",
+    "@types/node": "^22.14.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.1",
+    "@types/three": "0.175.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.21",
+    "concurrently": "^9.1.2",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.8.3",
+    "vite": "^6.2.5",
+    "vitest": "^3.1.1",
+    "wrangler": "^3.114.4"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

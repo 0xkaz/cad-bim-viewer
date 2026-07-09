@@ -1,0 +1,25 @@
+diff --git a/src/TextRenderer.js b/src/TextRenderer.js
+index 4e3d9eff6ec09025f39aa431640c860762c6e296..84ebd95731970ced6a2ab65c026aea3f72466766 100644
+--- a/src/TextRenderer.js
++++ b/src/TextRenderer.js
+@@ -315,10 +315,17 @@ class Font {
+         this.data = data
+         this.charMap = new Map()
+         for (const glyph of Object.values(data.glyphs.glyphs)) {
+-            if (glyph.unicode === undefined) {
+-                continue
++            /* A single glyph may be mapped from several code points (e.g. a CJK ideograph that
++             * shares its glyph with a Kangxi radical). opentype.js exposes only the first one via
++             * `glyph.unicode`, which for such glyphs is often the radical rather than the ideograph,
++             * making the real character appear "missing". Index every code point in `glyph.unicodes`
++             * so all supported characters are found. */
++            const codePoints = (glyph.unicodes && glyph.unicodes.length > 0)
++                ? glyph.unicodes
++                : (glyph.unicode !== undefined ? [glyph.unicode] : [])
++            for (const codePoint of codePoints) {
++                this.charMap.set(String.fromCodePoint(codePoint), glyph)
+             }
+-            this.charMap.set(String.fromCodePoint(glyph.unicode), glyph)
+         }
+         /* Scale to transform the paths to size 1. */
+         //XXX not really clear what is the resulting unit, check, review and comment it later

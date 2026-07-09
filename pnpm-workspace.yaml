@@ -1,0 +1,17 @@
+packages:
+  - "."
+
+allowBuilds:
+  '@biomejs/biome': true
+  esbuild: true
+  sharp: true
+  workerd: true
+
+onlyBuiltDependencies:
+  - "@biomejs/biome"
+  - "esbuild"
+  - "sharp"
+  - "workerd"
+
+patchedDependencies:
+  dxf-viewer@1.0.48: patches/dxf-viewer@1.0.48.patch
